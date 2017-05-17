@@ -8,6 +8,7 @@ class Node {
   }
 
   appendChild(node) {
+    if(!node) return;
     if (this.left == null) {
       this.left = node;
     }
@@ -18,72 +19,67 @@ class Node {
   }
 
   removeChild(node) {
-    node.parent = null;
-    if (this.left == node) {
-      this.left = null;
-    }
-    else if (this.right == node) {
-      this.right = null;
-    }
-    else {
-      throw 'node is not a child of this node';
+    if (node == null) {
+      return
     }
 
+    if (this.left == node) {
+      this.left.parent = null;
+      this.left = null;
+    } else if (this.right == node) {
+      this.right.parent = null;
+      this.right = null;
+    } else {
+      throw 'incorrect child';
+    }
   }
 
   remove() {
-    if (this.parent == null) {
+    if (!this.parent) {
       return;
     }
     this.parent.removeChild(this);
   }
 
   swapWithParent() {
-    if (this.parent == null) {
+    if (!this.parent) {
       return;
     }
 
-    let that = this;
     let parent = this.parent;
     let parentsParent = parent.parent;
-    let leftChild = this.left;
-    let rightChild = this.right;
-    let isThisParentsLeftChild = parent.left == this;
-    let secondParentsChild = isThisParentsLeftChild ? parent.right : parent.left;
+    let parentsLeft = parent.left;
+    let parentsRight = parent.right;
+    let left = this.left;
+    let right = this.right;
 
-    this.parent.remove();
-    this.remove();
-
-    if (parentsParent != null) {
-      parentsParent.appendChild(that);
+    if(parentsParent) {
+      parentsParent.removeChild(parent);
     }
 
-    if (secondParentsChild != null) {
-      if (isThisParentsLeftChild) {
-        that.right = secondParentsChild;
-        that.left = null;
-      } else {
-        that.left = secondParentsChild;
-        that.right = null;
-      }
-      secondParentsChild.parent = that;
+    parent.removeChild(parentsLeft);
+    parent.removeChild(parentsRight);
+    this.removeChild(left);
+    this.removeChild(right);
+
+    if(parentsParent) {
+      parentsParent.appendChild(this);
     }
 
-    that.appendChild(parent);
-
-    if (leftChild != null) {
-      parent.left = leftChild;
-      leftChild.parent = parent;
+    if(parentsLeft == this) {
+      this.appendChild(parent);
     } else {
-      parent.left = null;
+      this.appendChild(parentsLeft);
     }
 
-    if (rightChild != null) {
-      parent.right = rightChild;
-      rightChild.parent = parent;
+    if(parentsRight == this) {
+      this.appendChild(parent);
     } else {
-      parent.right = null;
+      this.appendChild(parentsRight);
     }
+
+    parent.appendChild(left);
+    parent.appendChild(right);
   }
 
 }
