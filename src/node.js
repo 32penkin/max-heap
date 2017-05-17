@@ -84,7 +84,6 @@ class Node {
     } else {
       parent.right = null;
     }
-
   }
 
 }
