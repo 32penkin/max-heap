@@ -1,45 +1,45 @@
 class Node {
-	constructor(data, priority) {
-		this.data = data;
+  constructor(data, priority) {
+    this.data = data;
     this.priority = priority;
-		this.parent = null;
-		this.left = null;
-		this.right = null;
-	}
+    this.parent = null;
+    this.left = null;
+    this.right = null;
+  }
 
-	appendChild(node) {
-	  if( this.left == null) {
-	    this.left = node;
+  appendChild(node) {
+    if (this.left == null) {
+      this.left = node;
     }
     else if (this.right == null) {
-	    this.right = node;
+      this.right = node;
     }
     node.parent = this;
   }
 
-	removeChild(node) {
-	  node.parent = null;
-	  if(this.left == node) {
-	    this.left = null;
+  removeChild(node) {
+    node.parent = null;
+    if (this.left == node) {
+      this.left = null;
     }
     else if (this.right == node) {
-	    this.right = null;
+      this.right = null;
     }
     else {
-	    throw 'node is not a child of this node';
+      throw 'node is not a child of this node';
     }
 
   }
 
-	remove() {
-	  if(this.parent == null) {
-	    return;
+  remove() {
+    if (this.parent == null) {
+      return;
     }
     this.parent.removeChild(this);
-	}
+  }
 
-	swapWithParent() {
-    if(this.parent == null){
+  swapWithParent() {
+    if (this.parent == null) {
       return;
     }
 
@@ -49,19 +49,17 @@ class Node {
     let leftChild = this.left;
     let rightChild = this.right;
     let isThisParentsLeftChild = parent.left == this;
-    let secondParentsChild = null;
-
-    secondParentsChild = isThisParentsLeftChild ? parent.right : parent.left;
+    let secondParentsChild = isThisParentsLeftChild ? parent.right : parent.left;
 
     this.parent.remove();
     this.remove();
 
-    if(parentsParent != null) {
+    if (parentsParent != null) {
       parentsParent.appendChild(that);
     }
 
-    if(secondParentsChild != null) {
-      if(isThisParentsLeftChild) {
+    if (secondParentsChild != null) {
+      if (isThisParentsLeftChild) {
         that.right = secondParentsChild;
         that.left = null;
       } else {
@@ -73,14 +71,14 @@ class Node {
 
     that.appendChild(parent);
 
-    if(leftChild != null) {
+    if (leftChild != null) {
       parent.left = leftChild;
       leftChild.parent = parent;
     } else {
       parent.left = null;
     }
 
-    if(rightChild != null) {
+    if (rightChild != null) {
       parent.right = rightChild;
       rightChild.parent = parent;
     } else {
