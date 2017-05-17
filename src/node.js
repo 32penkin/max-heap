@@ -48,14 +48,10 @@ class Node {
     let parentsParent = parent.parent;
     let leftChild = this.left;
     let rightChild = this.right;
-    let isThisParentsLeftChild = parent.left == this ? true : false;
+    let isThisParentsLeftChild = parent.left == this;
     let secondParentsChild = null;
 
-    if(isThisParentsLeftChild) {
-      secondParentsChild = parent.right;
-    } else {
-      secondParentsChild = parent.left;
-    }
+    secondParentsChild = isThisParentsLeftChild ? parent.right : parent.left;
 
     this.parent.remove();
     this.remove();
@@ -90,7 +86,7 @@ class Node {
     } else {
       parent.right = null;
     }
-    
+
   }
 
 }

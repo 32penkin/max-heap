@@ -6,25 +6,32 @@ class PriorityQueue {
       this.maxSize = maxSize;
     }
     else {
-      this.maxSize = 50;
+      this.maxSize = 30;
     }
     this.heap = new MaxHeap();
+    this.queueSize = 0;
   }
   
   push(data, priority) {
-
+    if (this.queueSize < this.maxSize) {
+      this.heap.push(data, priority);
+      this.queueSize++;
+    } else {
+      throw 'queue has max size';
+    }
   }
   
   shift() {
 
+    this.queueSize--;
   }
   
   size() {
-
+    return this.queueSize;
   }
   
   isEmpty() {
-
+    return this.queueSize == 0;
   }
 }
 
