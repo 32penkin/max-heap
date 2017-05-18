@@ -12,14 +12,14 @@ class MaxHeap {
     let node = new Node(data, priority);
     this.insertNode(node);
     this.shiftNodeUp(node);
-    this.heapSize++;
+    this.heapSize ++;
   }
 
   pop() {
     if (this.isEmpty()) {
       return;
     }
-    this.heapSize--;
+    this.heapSize --;
     let detached = this.detachRoot();
     if (this.isEmpty()) {
       return detached.data;
@@ -39,6 +39,7 @@ class MaxHeap {
     return root;
   }
 
+
   restoreRootFromLastInsertedNode(detached) {
     if (typeof detached.data === 'undefined') {
       return;
@@ -56,13 +57,13 @@ class MaxHeap {
 
     if (detached.left != lastEl) {
       lastEl.left = detached.left;
-      if (lastEl.left != null) {
+      if (lastEl.left) {
         lastEl.left.parent = lastEl;
       }
     }
     if (detached.right != lastEl) {
       lastEl.right = detached.right;
-      if (lastEl.right != null) {
+      if (lastEl.right) {
         lastEl.right.parent = lastEl;
       }
     }
@@ -72,7 +73,7 @@ class MaxHeap {
     }
     this.parentNodes.unshift(lastEl);
 
-    if (this.root.left != null && this.root.right != null) {
+    if (this.root.left && this.root.right) {
       this.parentNodes.shift();
     }
   }
@@ -96,22 +97,21 @@ class MaxHeap {
   }
 
   insertNode(node) {
-    if (this.root == null) {
+    if (!this.root) {
       this.root = node;
     } else {
       this.parentNodes[0].appendChild(node);
     }
     this.parentNodes.push(node);
-    if (this.parentNodes[0].left != null && this.parentNodes[0].right != null) {
+    if (this.parentNodes[0].left && this.parentNodes[0].right) {
       this.parentNodes.shift();
     }
   }
 
   shiftNodeUp(node) {
-    if (node.parent == null) {
+    if (!node.parent) {
       this.root = node;
-    }
-    else if (node.parent != null && node.parent.priority < node.priority) {
+    } else if (node.parent && node.parent.priority < node.priority) {
       let parent = node.parent;
       let indexOfNode = this.parentNodes.indexOf(node);
       let indexOfParentNode = this.parentNodes.indexOf(parent);

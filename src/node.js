@@ -8,7 +8,7 @@ class Node {
   }
 
   appendChild(node) {
-    if(!node) return;
+    if (!node) return;
     if (this.left == null) {
       this.left = node;
     }
@@ -53,7 +53,7 @@ class Node {
     let left = this.left;
     let right = this.right;
 
-    if(parentsParent) {
+    if (parentsParent) {
       parentsParent.removeChild(parent);
     }
 
@@ -62,17 +62,17 @@ class Node {
     this.removeChild(left);
     this.removeChild(right);
 
-    if(parentsParent) {
+    if (parentsParent) {
       parentsParent.appendChild(this);
     }
 
-    if(parentsLeft == this) {
+    if (parentsLeft == this) {
       this.appendChild(parent);
     } else {
       this.appendChild(parentsLeft);
     }
 
-    if(parentsRight == this) {
+    if (parentsRight == this) {
       this.appendChild(parent);
     } else {
       this.appendChild(parentsRight);
